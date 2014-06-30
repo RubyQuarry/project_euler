@@ -16,4 +16,4 @@ fibonacci = Enumerator.new do |yielder|
   end
 end
 
-puts fibonacci.first(100).select { |num| num.even? && num < 4_000_000 }.inject(:+)
+puts fibonacci.take_while { |num| num < 4_000_000 }.select { |num| num.even? }.inject(:+)
