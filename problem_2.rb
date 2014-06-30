@@ -8,13 +8,11 @@
 fibonacci = Enumerator.new do |yielder|
   a = 1
   b = 2
-  yielder.yield (1)
-  yielder.yield (2)
+  yielder.yield (a)
+  yielder.yield (b)
   loop do
     yielder.yield a + b
-    c = b
-    b = a + b
-    a = c
+    b, a = a + b, b
   end
 end
 
