@@ -18,7 +18,7 @@ a.map! { |item| item.gsub("\"","") }.sort!
 
 sum = 0
 a.each_with_index do |name, index|
-  sum += (index + 1) * name.chars.map { |c| (c.downcase.sum % 97 )+ 1 }.inject(:+)
+  sum += (index + 1) * name.chars.map { |c| (c.downcase.sum % 97 ) + 1 }.inject(:+)
 end
 
 puts sum
