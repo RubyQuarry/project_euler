@@ -3,3 +3,4 @@
 
 #Find the sum of all the multiples of 3 or 5 below 1000.
 puts (1...1000).select { |elem| (elem % 3).zero? || (elem % 5).zero? }.inject(:+)
+
