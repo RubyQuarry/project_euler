@@ -28,7 +28,6 @@ class Puzzle
     @columns = @rows.transpose # flip the rows to columns.
     @boxes = Array.new
     convert_to_boxes
-    puts @boxes.to_s
   end
 
   def convert_to_boxes
@@ -47,7 +46,7 @@ class Puzzle
       arr.clear
     end
 
-    @boxes.map! { |box| box.each_slice(9).to_a }.to_s
+    @boxes.map! { |box| box.each_slice(9).to_a }.flatten!(1)
 
   end
 end

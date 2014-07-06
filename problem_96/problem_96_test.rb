@@ -4,7 +4,7 @@ require 'shoulda/context'
 require_relative 'problem_96'
 
 
-class TestCalculator < Minitest::Test
+class TestSudoku < Minitest::Test
   context 'a puzzle' do
     setup do
       @rows = [[0, 0, 3, 0, 2, 0, 6, 0, 0],
@@ -29,17 +29,16 @@ class TestCalculator < Minitest::Test
     end
 
     should "parsed into boxes" do
-      assert_equal [[[0, 0, 3, 9, 0, 0, 0, 0, 1],
-                     [0, 0, 8, 7, 0, 0, 0, 0, 6],
-                     [0, 0, 2, 8, 0, 0, 0, 0, 5]],
-                    [[0, 2, 0, 3, 0, 5, 8, 0, 6],
-                     [1, 0, 2, 0, 0, 0, 7, 0, 8],
-                     [6, 0, 9, 2, 0, 3, 0, 1, 0]],
-                    [[6, 0, 0, 0, 0, 1, 4, 0, 0],
-                     [9, 0, 0, 0, 0, 8, 2, 0, 0],
-                     [5, 0, 0, 0, 0, 9, 3, 0, 0]]],
+      assert_equal [[0, 0, 3, 9, 0, 0, 0, 0, 1],
+                    [0, 0, 8, 7, 0, 0, 0, 0, 6],
+                    [0, 0, 2, 8, 0, 0, 0, 0, 5],
+                    [0, 2, 0, 3, 0, 5, 8, 0, 6],
+                    [1, 0, 2, 0, 0, 0, 7, 0, 8],
+                    [6, 0, 9, 2, 0, 3, 0, 1, 0],
+                    [6, 0, 0, 0, 0, 1, 4, 0, 0],
+                    [9, 0, 0, 0, 0, 8, 2, 0, 0],
+                    [5, 0, 0, 0, 0, 9, 3, 0, 0]],
                    @puzzle.boxes
     end
-
   end
 end
