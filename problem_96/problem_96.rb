@@ -21,30 +21,39 @@
 
 
 class Puzzle
-  attr_accessor :rows
+  attr_accessor :rows, :columns, :boxes
 
   def initialize(rows)
     @rows = rows
+    @columns = @rows.transpose # flip the rows to columns.
+    @boxes = Array.new
+    convert_to_boxes
+    puts @boxes.to_s
   end
 
-  def print
-    @rows.each do |row|
-      puts row
+  def convert_to_boxes
+    iterate = [(0..2), (3..5), (6..8)]
+    arr = []
+    square_value = 9
+    iterate.each do |iter|
+      square_value.times do |num|
+        square_value.times do |num2|
+          if iter.include?(num2)
+            arr << @rows[num][num2]
+          end
+        end
+      end
+      @boxes << Array.new(arr)
+      arr.clear
     end
-  end
 
-  def [](index)
-    @rows[0]
-  end
+    @boxes.map! { |box| box.each_slice(9).to_a }.to_s
 
-  def to_column
-    @rows.to_a
   end
 end
 
 module Sudoku
   SUDOKU_NUMBERS = (1..9).to_a
-
   def self.remaining_numbers(array)
     SUDOKU_NUMBERS - array
   end
@@ -92,4 +101,6 @@ File.foreach('sudoku.txt') do |file|
   end
 end
 
-puts Rows.transpose.to_s
+p = Puzzle.new(Rows)
+
+
