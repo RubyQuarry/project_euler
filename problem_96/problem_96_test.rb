@@ -52,7 +52,7 @@ class TestSudoku < Minitest::Test
 
     should "find appropriate starter column and row associated with \\
             given block" do
-       @puzzle.can_1(1)
+       @puzzle.can_solve(1)
 
     end
   end

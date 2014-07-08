@@ -56,7 +56,7 @@ class Puzzle
     end
     @boxes.map! { |box| box.each_slice(9).to_a }.flatten!(1)
     box = []
-    mappings = [0, 3, 6, 1, 5, 7, 2, 6, 8]
+    mappings = [0, 3, 6, 1, 4, 7, 2, 5, 8]
     mappings.each do |map|
       box << @boxes[map]
     end
@@ -75,29 +75,40 @@ class Puzzle
     end
   end
 
-  def can_1(box_num)
+  def can_solve(box_num)
     box = @boxes[box_num]
-    puts box.to_s
     start_column = (box_num % 3) * 3
     start_row = (box_num / 3) * 3
     col = @columns[start_column]
     row = @rows[start_row]
     fill_count = box.count(0) # Number of unfilled spaces in box.
-    arr = Array.new
-
-    box.each_with_index do |num, index|
-      next if num != 0
-      current_column = (start_column + (index % 3))
-      current_row = (start_row + ( index / 3))
-      col = @columns[current_column]
-      row = @rows[current_row]
-      unless @boxes.include?(1) || col.include?(1) || row.include?(1)
-        arr << index
+    current_column = -1
+    current_row = -1
+    1.upto(9) do |number|
+      arr = Array.new
+      box.each_with_index do |num, index|
+        next if num != 0
+        box = @boxes[box_num]
+        current_column = (start_column + (index % 3))
+        current_row = (start_row + (index / 3))
+        col = @columns[current_column]
+        row = @rows[current_row]
+        unless box.include?(number) || col.include?(number) || row.include?(number)
+          arr << [index, current_column, current_row]
+        end
       end
-    end
-    if arr.count == 1
-      puts "found 1"
-      box[arr[0]] = 1
+      if arr.count == 1
+        puts "found #{number}"
+        pos = arr[0][0]
+        box[pos] = number
+        @boxes[box_num] = box
+        @columns[arr[0][1]][((box_num / 3) * 3) + (pos / 3)] = number
+        @rows[arr[0][2]][((box_num % 3) * 3) + (pos % 3)] = number
+
+        puts @boxes[box_num].to_s
+        puts @columns[arr[0][1]].to_s
+        puts @rows[arr[0][2]].to_s
+      end
     end
   end
 
@@ -148,4 +159,12 @@ end
 
 p = Puzzle.new(Rows)
 
-p.can_1(1)
+
+while p.boxes.include?(0) do
+  0.upto(8) do |b|
+    p.can_solve(b)
+  end
+end
+
+
+puts p.boxes.to_s
