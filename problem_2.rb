@@ -8,6 +8,62 @@
 fibonacci = Enumerator.new do |yielder|
   a = 1
   b = 2
+  yielder.yield a
+  yielder.yield b
+  loop do
+    yielder.yield a + b
+    a, b = b, a + b
+  end
+end
+
+puts fibonacci.take_while { |n| n < 4_000_000 }.select { |num| num.even? }.inject(:+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fibonacci = Enumerator.new do |yielder|
+  a = 1
+  b = 2
   yielder.yield (a)
   yielder.yield (b)
   loop do

@@ -40,5 +40,10 @@ class TestSudoku < Minitest::Test
                     [5, 0, 0, 0, 0, 9, 3, 0, 0]],
                    @puzzle.boxes
     end
+
+    should "fill in array one element off" do
+      assert_equal(@puzzle.fill_in_last_box([0,1,2,3,4,5,6,7,8]),
+                                            [9,1,2,3,4,5,6,7,8])
+    end
   end
 end

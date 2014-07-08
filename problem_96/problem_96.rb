@@ -20,7 +20,16 @@
 # https://projecteuler.net/problem=96
 
 
+module Sudoku
+  SUDOKU_NUMBERS = (1..9).to_a
+  def self.remaining_numbers(array)
+    SUDOKU_NUMBERS - array
+  end
+end
+
+
 class Puzzle
+  include Sudoku
   attr_accessor :rows, :columns, :boxes
 
   def initialize(rows)
@@ -45,17 +54,21 @@ class Puzzle
       @boxes << Array.new(arr)
       arr.clear
     end
-
     @boxes.map! { |box| box.each_slice(9).to_a }.flatten!(1)
-
   end
-end
 
-module Sudoku
-  SUDOKU_NUMBERS = (1..9).to_a
-  def self.remaining_numbers(array)
-    SUDOKU_NUMBERS - array
+  def row_remaining(num)
+    Sudoku::remaining_numbers(@rows[num])
   end
+
+  def fill_in_last_box(arr)
+    if arr.count(0) == 1
+      num = arr.inject(45, :-)
+      arr.map { |x| x == 0? num : x }
+    end
+  end
+
+
 end
 
 
@@ -101,5 +114,3 @@ File.foreach('sudoku.txt') do |file|
 end
 
 p = Puzzle.new(Rows)
-
-
