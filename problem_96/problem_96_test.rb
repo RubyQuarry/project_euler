@@ -41,9 +41,20 @@ class TestSudoku < Minitest::Test
                    @puzzle.boxes
     end
 
-    should "fill in array one element off" do
+    should "recognize only one number is left and fill it in" do
+      # Unknown numbers are recognized as 0.
       assert_equal(@puzzle.fill_in_last_box([0,1,2,3,4,5,6,7,8]),
                                             [9,1,2,3,4,5,6,7,8])
+
+      assert_equal(@puzzle.fill_in_last_box([1,2,3,4,5,6,7,0,9]),
+                                            [1,2,3,4,5,6,7,8,9])
+    end
+
+    should "find appropriate starter column and row associated with \\
+            given block" do
+      assert_equal([0,0], @puzzle.can_1(0))
+      assert_equal([6,6], @puzzle.can_1(8))
+      assert_equal([3,6], @puzzle.can_1(5))
     end
   end
 end

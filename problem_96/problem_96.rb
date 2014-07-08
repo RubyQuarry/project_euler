@@ -63,9 +63,19 @@ class Puzzle
 
   def fill_in_last_box(arr)
     if arr.count(0) == 1
-      num = arr.inject(45, :-)
-      arr.map { |x| x == 0? num : x }
+      sum = 45 # Sum of sudoku row.
+      num = arr.inject(sum, :-)
+      arr.map! { |x| x == 0? num : x }
     end
+  end
+
+  def can_1(box_num)
+    box = @boxes[box_num]
+    start_column = (box_num % 3) * 3
+    start_row = (box_num / 3) * 3
+    col = @columns[(box_num % 3) * 3]
+    row = @rows[(box_num / 3) * 3]
+    return start_row, start_column
   end
 
 
