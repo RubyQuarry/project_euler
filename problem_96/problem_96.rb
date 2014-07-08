@@ -55,6 +55,12 @@ class Puzzle
       arr.clear
     end
     @boxes.map! { |box| box.each_slice(9).to_a }.flatten!(1)
+    box = []
+    mappings = [0, 3, 6, 1, 5, 7, 2, 6, 8]
+    mappings.each do |map|
+      box << @boxes[map]
+    end
+    @boxes = box
   end
 
   def row_remaining(num)
@@ -71,11 +77,28 @@ class Puzzle
 
   def can_1(box_num)
     box = @boxes[box_num]
+    puts box.to_s
     start_column = (box_num % 3) * 3
     start_row = (box_num / 3) * 3
-    col = @columns[(box_num % 3) * 3]
-    row = @rows[(box_num / 3) * 3]
-    return start_row, start_column
+    col = @columns[start_column]
+    row = @rows[start_row]
+    fill_count = box.count(0) # Number of unfilled spaces in box.
+    arr = Array.new
+
+    box.each_with_index do |num, index|
+      next if num != 0
+      current_column = (start_column + (index % 3))
+      current_row = (start_row + ( index / 3))
+      col = @columns[current_column]
+      row = @rows[current_row]
+      unless @boxes.include?(1) || col.include?(1) || row.include?(1)
+        arr << index
+      end
+    end
+    if arr.count == 1
+      puts "found 1"
+      box[arr[0]] = 1
+    end
   end
 
 
@@ -124,3 +147,5 @@ File.foreach('sudoku.txt') do |file|
 end
 
 p = Puzzle.new(Rows)
+
+p.can_1(1)
