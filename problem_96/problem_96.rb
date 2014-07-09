@@ -79,11 +79,6 @@ class Puzzle
     box = @boxes[box_num]
     start_column = (box_num % 3) * 3
     start_row = (box_num / 3) * 3
-    col = @columns[start_column]
-    row = @rows[start_row]
-    fill_count = box.count(0) # Number of unfilled spaces in box.
-    current_column = -1
-    current_row = -1
     1.upto(9) do |number|
       arr = Array.new
       box.each_with_index do |num, index|
@@ -98,16 +93,12 @@ class Puzzle
         end
       end
       if arr.count == 1
-        puts "found #{number}"
         pos = arr[0][0]
         box[pos] = number
         @boxes[box_num] = box
         @columns[arr[0][1]][((box_num / 3) * 3) + (pos / 3)] = number
         @rows[arr[0][2]][((box_num % 3) * 3) + (pos % 3)] = number
 
-        puts @boxes[box_num].to_s
-        puts @columns[arr[0][1]].to_s
-        puts @rows[arr[0][2]].to_s
       end
     end
   end
@@ -117,6 +108,10 @@ class Puzzle
       return false if box.include?(0)
     end
     true
+  end
+
+  def random_guess
+
   end
 
 
@@ -168,10 +163,10 @@ File.foreach('sudoku.txt') do |file|
   end
 end
 
+puzzles << Puzzle.new(rows.dup)
 
 
-p = puzzles[2]
-puts p.inspect
+p = puzzles[0]
 
 #p = Puzzle.new(rows)
 
@@ -180,6 +175,5 @@ while !p.sudoku_solve
     p.can_solve(b)
   end
 end
-
 
 puts p.boxes.to_s
