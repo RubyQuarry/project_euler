@@ -112,6 +112,13 @@ class Puzzle
     end
   end
 
+  def sudoku_solve
+    @boxes.each do |box|
+      return false if box.include?(0)
+    end
+    true
+  end
+
 
 end
 
@@ -146,25 +153,29 @@ class Column
   end
 end
 
-Rows = []
-Puzzles = []
+rows = []
+puzzles = []
 
 File.foreach('sudoku.txt') do |file|
   if file =~ /[0-9]{9}/
-    if Rows.length < 9
-      Rows << file.split("")[0..8].map(&:to_i)
+    if rows.length < 9
+      rows << file.split("")[0..8].map(&:to_i)
+    else
+      pubbl
+      rows.clear
+      rows << file.split("")[0..8].map(&:to_i)
     end
   end
 end
 
-p = Puzzle.new(Rows)
+p = Puzzle.new(rows)
 
+puts p.inspect
 
-while p.boxes.include?(0) do
+while !p.sudoku_solve
   0.upto(8) do |b|
     p.can_solve(b)
   end
 end
-
 
 puts p.boxes.to_s
