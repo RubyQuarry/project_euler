@@ -153,29 +153,33 @@ class Column
   end
 end
 
-rows = []
-puzzles = []
+rows = Array.new
+puzzles = Array.new
 
 File.foreach('sudoku.txt') do |file|
   if file =~ /[0-9]{9}/
     if rows.length < 9
       rows << file.split("")[0..8].map(&:to_i)
     else
-      pubbl
+      puzzles << Puzzle.new(rows.dup)
       rows.clear
       rows << file.split("")[0..8].map(&:to_i)
     end
   end
 end
 
-p = Puzzle.new(rows)
 
+
+p = puzzles[2]
 puts p.inspect
+
+#p = Puzzle.new(rows)
 
 while !p.sudoku_solve
   0.upto(8) do |b|
     p.can_solve(b)
   end
 end
+
 
 puts p.boxes.to_s
