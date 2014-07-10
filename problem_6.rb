@@ -7,8 +7,8 @@
 
 one_to_one_hundred = (1..100).to_a
 
-sum_of_separate_squares = one_to_one_hundred.map { |num| num ** 2}.inject(:+)
+sum_of_separate_squares = one_to_one_hundred.map { |num| num ** 2 }.inject(:+)
 
 sum_of_summed_squares = one_to_one_hundred.inject(:+) ** 2
 
-puts "difference", sum_of_summed_squares - sum_of_separate_squares
+puts "difference: ", sum_of_summed_squares - sum_of_separate_squares
