@@ -50,30 +50,10 @@ class TestSudoku < Minitest::Test
                                             [1,2,3,4,5,6,7,8,9])
     end
 
-    should "solve test" do
-
-      rows = Array.new
-      puzzles = Array.new
-
-      File.foreach('sudoku.txt') do |file|
-        if file =~ /[0-9]{9}/
-          if rows.length < 9
-            rows << file.split("")[0..8].map(&:to_i)
-          else
-            puzzles << Puzzle.new(rows.dup)
-            rows.clear
-            rows << file.split("")[0..8].map(&:to_i)
-          end
-        end
-      end
-
-      puzzles << Puzzle.new(rows.dup)
-      p = puzzles[0]
-      while !p.sudoku_solve
-        0.upto(8) do |b|
-          p.can_solve(b)
-        end
-      end
+    should "simple solve sudoku" do
+      puzzles = parse_text()
+      simple_puzzle = puzzles[0]
+      simple_solve(simple_puzzle)
 
       assert_equal([[4, 8, 3, 9, 6, 7, 2, 5, 1],
                     [9, 2, 1, 3, 4, 5, 8, 7, 6],
@@ -83,8 +63,7 @@ class TestSudoku < Minitest::Test
                     [9, 7, 6, 1, 3, 8, 2, 4, 5],
                     [3, 7, 2, 8, 1, 4, 6, 9, 5],
                     [6, 8, 9, 2, 5, 3, 4, 1, 7],
-                    [5, 1, 4, 7, 6, 9, 3, 8, 2]], p.boxes)
-
+                    [5, 1, 4, 7, 6, 9, 3, 8, 2]], simple_puzzle.boxes)
     end
   end
 end

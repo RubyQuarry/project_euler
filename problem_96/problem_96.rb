@@ -103,7 +103,7 @@ class Puzzle
     end
   end
 
-  def sudoku_solve
+  def sudoku_solved?
     @boxes.each do |box|
       return false if box.include?(0)
     end
@@ -148,34 +148,39 @@ class Column
   end
 end
 
-rows = Array.new
-puzzles = Array.new
+def parse_text
+  rows = Array.new
+  puzzles = Array.new
 
-File.foreach('sudoku.txt') do |file|
-  if file =~ /[0-9]{9}/
-    if rows.length < 9
-      rows << file.split("")[0..8].map(&:to_i)
-    else
-      puzzles << Puzzle.new(rows.dup)
-      rows.clear
-      rows << file.split("")[0..8].map(&:to_i)
+  File.foreach('sudoku.txt') do |file|
+    if file =~ /[0-9]{9}/
+      if rows.length < 9
+        rows << file.split("")[0..8].map(&:to_i)
+      else
+        puzzles << Puzzle.new(rows.dup)
+        rows.clear
+        rows << file.split("")[0..8].map(&:to_i)
+      end
     end
   end
+  puzzles << Puzzle.new(rows.dup)
+  puzzles
 end
 
-puzzles << Puzzle.new(rows.dup)
+puzzles = parse_text
 
 
 p = puzzles[0]
 
-puts p.boxes.to_s
-
-#p = Puzzle.new(rows)
-
-while !p.sudoku_solve
-  0.upto(8) do |b|
-    p.can_solve(b)
+def simple_solve(sudoku)
+  while !sudoku.sudoku_solved?
+    0.upto(8) do |b|
+      sudoku.can_solve(b)
+    end
   end
 end
+
+
+simple_solve(p)
 
 puts p.boxes.to_s
