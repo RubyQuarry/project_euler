@@ -29,16 +29,16 @@ class TestSudoku < Minitest::Test
     end
 
     should "parsed into boxes" do
-      assert_equal [[0, 0, 3, 9, 0, 0, 0, 0, 1],
-                    [0, 0, 8, 7, 0, 0, 0, 0, 6],
-                    [0, 0, 2, 8, 0, 0, 0, 0, 5],
+      assert_equal( [[0, 0, 3, 9, 0, 0, 0, 0, 1],
                     [0, 2, 0, 3, 0, 5, 8, 0, 6],
-                    [1, 0, 2, 0, 0, 0, 7, 0, 8],
-                    [6, 0, 9, 2, 0, 3, 0, 1, 0],
                     [6, 0, 0, 0, 0, 1, 4, 0, 0],
+                    [0, 0, 8, 7, 0, 0, 0, 0, 6],
+                    [1, 0, 2, 0, 0, 0, 7, 0, 8],
                     [9, 0, 0, 0, 0, 8, 2, 0, 0],
+                    [0, 0, 2, 8, 0, 0, 0, 0, 5],
+                    [6, 0, 9, 2, 0, 3, 0, 1, 0],
                     [5, 0, 0, 0, 0, 9, 3, 0, 0]],
-                   @puzzle.boxes
+                   @puzzle.boxes)
     end
 
     should "recognize only one number is left and fill it in" do
@@ -50,9 +50,40 @@ class TestSudoku < Minitest::Test
                                             [1,2,3,4,5,6,7,8,9])
     end
 
-    should "find appropriate starter column and row associated with \\
-            given block" do
-       @puzzle.can_solve(1)
+    should "solve test" do
+
+      rows = Array.new
+      puzzles = Array.new
+
+      File.foreach('sudoku.txt') do |file|
+        if file =~ /[0-9]{9}/
+          if rows.length < 9
+            rows << file.split("")[0..8].map(&:to_i)
+          else
+            puzzles << Puzzle.new(rows.dup)
+            rows.clear
+            rows << file.split("")[0..8].map(&:to_i)
+          end
+        end
+      end
+
+      puzzles << Puzzle.new(rows.dup)
+      p = puzzles[0]
+      while !p.sudoku_solve
+        0.upto(8) do |b|
+          p.can_solve(b)
+        end
+      end
+
+      assert_equal([[4, 8, 3, 9, 6, 7, 2, 5, 1],
+                    [9, 2, 1, 3, 4, 5, 8, 7, 6],
+                    [6, 5, 7, 8, 2, 1, 4, 9, 3],
+                    [5, 4, 8, 7, 2, 9, 1, 3, 6],
+                    [1, 3, 2, 5, 6, 4, 7, 9, 8],
+                    [9, 7, 6, 1, 3, 8, 2, 4, 5],
+                    [3, 7, 2, 8, 1, 4, 6, 9, 5],
+                    [6, 8, 9, 2, 5, 3, 4, 1, 7],
+                    [5, 1, 4, 7, 6, 9, 3, 8, 2]], p.boxes)
 
     end
   end

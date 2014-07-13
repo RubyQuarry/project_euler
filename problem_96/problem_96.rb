@@ -168,6 +168,8 @@ puzzles << Puzzle.new(rows.dup)
 
 p = puzzles[0]
 
+puts p.boxes.to_s
+
 #p = Puzzle.new(rows)
 
 while !p.sudoku_solve
