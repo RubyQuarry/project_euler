@@ -98,7 +98,6 @@ class Puzzle
         @boxes[box_num] = box
         @columns[arr[0][1]][((box_num / 3) * 3) + (pos / 3)] = number
         @rows[arr[0][2]][((box_num % 3) * 3) + (pos % 3)] = number
-
       end
     end
   end
@@ -167,11 +166,6 @@ def parse_text
   puzzles
 end
 
-puzzles = parse_text
-
-
-p = puzzles[0]
-
 def simple_solve(sudoku)
   while !sudoku.sudoku_solved?
     0.upto(8) do |b|
@@ -181,6 +175,3 @@ def simple_solve(sudoku)
 end
 
 
-simple_solve(p)
-
-puts p.boxes.to_s
