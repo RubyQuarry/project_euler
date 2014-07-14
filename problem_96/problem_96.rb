@@ -109,7 +109,26 @@ class Puzzle
     true
   end
 
-  def random_guess
+  def random_guess # TODO
+    r = Random.new
+    box_num = r.rand(9)
+    num = r.rand(9) + 1
+
+    box = @boxes[box_num]
+    start_column = (box_num % 3) * 3
+    start_row = (box_num / 3) * 3
+    index = (box_num / 3) * 3
+
+    box_zero = @boxes[box_num][0]
+    col_zero = @columns[start_column][index]
+    row_zero = @rows[start_row][index]
+
+    while box_zero == 0 && box.include?(num) || col.include?(num) || row.include?(num)
+      @boxes[box_num][0] = num
+      @columns[start_column][index] = num
+      @rows[start_row][index] = num
+    end
+
 
   end
 
@@ -167,11 +186,10 @@ def parse_text
 end
 
 def simple_solve(sudoku)
-  while !sudoku.sudoku_solved?
-    0.upto(8) do |b|
-      sudoku.can_solve(b)
+  until sudoku.sudoku_solved?
+    0.upto(8) do |num|
+      sudoku.can_solve(num)
     end
   end
 end
-
 
