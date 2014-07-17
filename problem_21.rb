@@ -1,10 +1,12 @@
-sum = 0
-(1..10_000).to_a.each do |num|
-  num.downto(1) do |elem|
-    if num % elem == 0
-      sum += elem if num != elem
-    end
+
+
+
+
+class Task
+  # Constructor
+  def initialize(args = {})
+    @start_date = args.fetch(:start_date, "1/1/2014")
+    @end_date = args.fetch(:end_date, "12/12/2014")
+    @effort_needed = args.fetch(:effort_needed, "Med")
   end
 end
-
-puts sum
