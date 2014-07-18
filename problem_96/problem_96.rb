@@ -128,43 +128,9 @@ class Puzzle
       @columns[start_column][index] = num
       @rows[start_row][index] = num
     end
-
-
-  end
-
-
-end
-
-
-class Row
-  include Sudoku
-
-  def initialize(row)
-    @row = row
-  end
-
-  def remaining_numbers
-    Sudoku::remaining_numbers(@row)
-  end
-
-  def to_s
-    @row.to_s
-  end
-
-  def to_a
-    [@row]
-  end
-
-  def[](index)
-    @row[index]
   end
 end
 
-class Column
-  def initialize(cols)
-    @cols = cols
-  end
-end
 
 def parse_text
   rows = Array.new
