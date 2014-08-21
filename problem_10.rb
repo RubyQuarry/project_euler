@@ -4,7 +4,7 @@
 class Integer
   def prime?
     return false if self.even?
-    (self - 1).downto(2) do |div|
+    (self / 2).downto(2) do |div|
       return false if self % div == 0
     end
     true

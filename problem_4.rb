@@ -9,5 +9,4 @@ class Integer
   end
 end
 
-puts (100..999).to_a.permutation(2).map{ |arr|  arr[0] * arr[1] }.
-  select { |num| num.palindrome? }.max
+puts (100..999).to_a.permutation(2).map{ |arr|  arr[0] * arr[1] }.select { |num| num.palindrome? }.max

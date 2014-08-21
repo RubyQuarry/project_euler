@@ -6,6 +6,8 @@ class Integer
   def factorial
     (1..self).to_a.inject(1) { |sum, num| sum * num  }
   end
+
+
 end
 
 list = []
