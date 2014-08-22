@@ -135,7 +135,6 @@ end
 def parse_text
   rows = Array.new
   puzzles = Array.new
-
   File.foreach('sudoku.txt') do |file|
     if file =~ /[0-9]{9}/
       if rows.length < 9

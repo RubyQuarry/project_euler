@@ -2,9 +2,6 @@ require 'rspec'
 require_relative 'problem_54'
 
 describe 'Poker problem' do
-
-
-
     it "should be a tw pair" do
       file = "AC 2D 3D 4C 5C 7C 5H 8D TD KS"
       a = file.split

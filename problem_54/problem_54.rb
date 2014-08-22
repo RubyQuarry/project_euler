@@ -1,7 +1,4 @@
 class Match
-  attr_reader :hand
-  def initialize(hands = nil)
-  end
 
   # 1 in hand1 wins
   # 0 if tie
@@ -18,7 +15,7 @@ class Hand
     @pairs = pairify
   end
 
-  # Suits are irrelavent for this problem, but can be added to be more realistic
+  # Suits are irrelevent for this problem, but can be added to be more realistic
   def hand_combination
     if royal_flush?
       [9, 14, hand[0].suit]
@@ -77,11 +74,11 @@ class Hand
   end
 
   def straight?
-    hand.each_cons(2).all? { |x, y| y.value == x.value + 1 } || high_cards ==  [14, 5, 4 ,3 , 2]
+    hand.each_cons(2).all? { |x, y| y.value == x.value + 1 } || high_cards == [14, 5, 4 ,3 , 2]
   end
 
   def flush?
-    hand.all? { |card| card.suit == hand[0].suit  }
+    hand.all? { |card| card.suit == hand[0].suit }
   end
 end
 
