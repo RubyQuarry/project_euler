@@ -1,14 +1,5 @@
-class Match
-
-  # 1 in hand1 wins
-  # 0 if tie
-  # -1 if hand2 wins
-  def best_hand(hand1, hand2)
-    return hand1.hand_combination <=> hand2.hand_combination
-  end
-end
-
 class Hand
+  include Comparable
   attr_reader :hand, :pairs
   def initialize(hand)
     @hand = handify(hand)
@@ -38,6 +29,10 @@ class Hand
     else
       [0, high_cards, 0].flatten
     end
+  end
+
+  def <=>(other_hand)
+    hand_combination <=> other_hand.hand_combination
   end
 
   private
@@ -104,12 +99,11 @@ end
 
 def run_poker
   player1_count = 0
-  m = Match.new
   File.foreach('poker.txt') do |file|
     a = file.split
     hand1 = Hand.new(a[0..4])
     hand2 = Hand.new(a[5..9])
-    if m.best_hand(hand1, hand2) == 1
+    if hand1 > hand2
       player1_count += 1
     end
   end
