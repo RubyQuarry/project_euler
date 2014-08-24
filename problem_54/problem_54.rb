@@ -37,10 +37,6 @@ class Hand
 
   private
 
-  def full_house
-    pairs_count(1, 2) && pairs_count(1, 3)
-  end
-
   def handify(hand)
     hand.map { |card| Card.new(card) }.sort { |x, y| x.value <=> y.value }
   end
@@ -48,6 +44,11 @@ class Hand
   # Count the frequency of each card
   def pairify
     hand.each_with_object(Hash.new(0)) { |o, h| h[o.value] += 1 }
+  end
+
+  def pairs_count(num, pair_num = 2)
+    return true if pairs.count { |k, v| v == pair_num } == num
+    return false
   end
 
   def high_cards
@@ -63,15 +64,14 @@ class Hand
     straight? && flush?
   end
 
-  def pairs_count(num, pair_num = 2)
-    return true if pairs.count { |k, v| v == pair_num } == num
-    return false
-  end
-
   def straight?
     hand.each_cons(2).all? { |x, y| y.value == x.value + 1 } || high_cards == [14, 5, 4 ,3 , 2]
   end
-
+  
+  def full_house
+    pairs_count(1, 2) && pairs_count(1, 3)
+  end
+  
   def flush?
     hand.all? { |card| card.suit == hand[0].suit }
   end
